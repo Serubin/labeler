@@ -1,6 +1,6 @@
-name: 'PR labeler based on multiple rules'
+name: 'PR Auto Labeler'
 description: 'Label Pull Requests based on configurable rules'
-author: 'Galo Navarro <anglorvaroa@gmail.com>'
+author: 'Serubin <serubin@serubin.net>'
 inputs: 
   config_path:
     description: 'Path for labeling rules'
@@ -9,5 +9,5 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
 branding:
-  icon: award
-  color: blue
+  icon: tag
+  color: yellow
