@@ -1,0 +1,35 @@
+name: Build Docker
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out commit
+        uses: actions/checkout@v2
+      - name: Create tag name
+        id: tag
+        run: echo "::set-output name=name::${GITHUB_REF#refs/*/}-${GITHUB_SHA:0:7}"
+      - name: Get repo owner
+        id: get_owner
+        run: |
+          OWNER=${GITHUB_REPOSITORY%/*}
+          echo "::set-output name=owner::${OWNER,,}"
+      - name: Authenticate to GitHub Package Registry
+        run: docker login ghcr.io -u ${{ steps.get_owner.outputs.owner }} -p ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Docker image
+        run: docker build -t labeler .
+      - name: Push
+        run: |
+          IMAGE_BASE=ghcr.io/${{ steps.get_owner.outputs.owner }}/labeler/labeler
+          IMAGE_TAG=$IMAGE_BASE:${{ steps.tag.outputs.name }}
+          IMAGE_LATEST=$IMAGE_BASE:latest
+          echo $IMAGE_BASE $IMAGE_TAG $IMAGE_LATEST
+          docker tag labeler $IMAGE_TAG
+          docker push $IMAGE_TAG
+          docker tag labeler $IMAGE_LATEST
+          docker push $IMAGE_LATEST

@@ -1,13 +1,13 @@
 name: 'Auto Labeler for Pull Requests'
 description: 'Label Pull Requests based on configurable rules'
 author: 'Serubin <serubin@serubin.net>'
-inputs: 
+inputs:
   config_path:
     description: 'Path for labeling rules'
     default: '.github/labeler.yml'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'ghcr.io/srvaroa/labeler/labeler:latest'
 branding:
   icon: tag
   color: yellow
