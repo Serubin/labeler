@@ -7,7 +7,7 @@ inputs:
     default: '.github/labeler.yml'
 runs:
   using: 'docker'
-  image: 'ghcr.io/srvaroa/labeler/labeler:latest'
+  image: 'ghcr.io/srvaroa/labeler/labeler:v0.11'
 branding:
   icon: tag
   color: yellow
